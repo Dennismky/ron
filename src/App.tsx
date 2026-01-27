@@ -28,6 +28,37 @@ import {
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
+// Counter Animation Component
+function CountUpAnimation({ end, suffix = "" }) {
+  const [count, setCount] = useState(0);
+  const [hasAnimated, setHasAnimated] = useState(false);
+
+  useEffect(() => {
+    if (hasAnimated) return;
+    
+    const duration = 2000; // 2 seconds
+    const steps = 60;
+    const increment = end / steps;
+    const stepDuration = duration / steps;
+    let current = 0;
+
+    const timer = setInterval(() => {
+      current += increment;
+      if (current >= end) {
+        setCount(end);
+        setHasAnimated(true);
+        clearInterval(timer);
+      } else {
+        setCount(Math.floor(current));
+      }
+    }, stepDuration);
+
+    return () => clearInterval(timer);
+  }, [end, hasAnimated]);
+
+  return <span>{count}{suffix}</span>;
+}
+
 export default function App() {
   const [activeService, setActiveService] = useState(null);
   const [lightboxOpen, setLightboxOpen] = useState(false);
@@ -36,6 +67,7 @@ export default function App() {
   const [expandedFAQ, setExpandedFAQ] = useState(null);
   const [filterCategory, setFilterCategory] = useState("All");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [showFloatingButton, setShowFloatingButton] = useState(false);
 
   const services = [
     {
@@ -152,6 +184,14 @@ export default function App() {
     return () => clearInterval(interval);
   }, [testimonials.length]);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowFloatingButton(window.scrollY > 300);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   const openLightbox = (index) => {
     setLightboxIndex(index);
     setLightboxOpen(true);
@@ -170,6 +210,10 @@ export default function App() {
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600&display=swap');
         
+        html {
+          scroll-behavior: smooth;
+        }
+        
         * {
           font-family: 'DM Sans', sans-serif;
         }
@@ -177,6 +221,7 @@ export default function App() {
         h1, h2, h3, h4, h5, h6 {
           font-family: 'Bricolage Grotesque', sans-serif;
           font-weight: 700;
+          letter-spacing: -0.02em;
         }
         
         .hero-video-overlay {
@@ -208,6 +253,19 @@ export default function App() {
           60% {
             transform: translateY(-5px);
           }
+        }
+        
+        @keyframes float {
+          0%, 100% {
+            transform: translateY(0px);
+          }
+          50% {
+            transform: translateY(-10px);
+          }
+        }
+        
+        .float-animation {
+          animation: float 3s ease-in-out infinite;
         }
         
         .trust-badge {
@@ -249,6 +307,37 @@ export default function App() {
         
         .noise-bg {
           background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+        }
+        
+        .floating-action-button {
+          position: fixed;
+          bottom: 2rem;
+          right: 2rem;
+          z-index: 1000;
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .decorative-blob {
+          position: absolute;
+          border-radius: 50%;
+          filter: blur(60px);
+          opacity: 0.3;
+          animation: blob 7s infinite;
+        }
+        
+        @keyframes blob {
+          0% {
+            transform: translate(0px, 0px) scale(1);
+          }
+          33% {
+            transform: translate(30px, -50px) scale(1.1);
+          }
+          66% {
+            transform: translate(-20px, 20px) scale(0.9);
+          }
+          100% {
+            transform: translate(0px, 0px) scale(1);
+          }
         }
       `}</style>
 
@@ -414,6 +503,101 @@ export default function App() {
             className="absolute bottom-8 left-1/2 transform -translate-x-1/2 scroll-indicator"
           >
             <ChevronDown className="w-8 h-8 text-white" />
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Why Choose Us Section */}
+      <section className="py-20 px-4 bg-white relative overflow-hidden">
+        {/* Decorative background blobs */}
+        <div className="decorative-blob absolute top-20 left-10 w-64 h-64 bg-blue-400" style={{ animationDelay: '0s' }} />
+        <div className="decorative-blob absolute bottom-20 right-10 w-80 h-80 bg-yellow-300" style={{ animationDelay: '2s' }} />
+        
+        <div className="max-w-6xl mx-auto relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-16"
+          >
+            <h3 className="text-4xl md:text-5xl font-bold mb-4">Why Choose Ron the Handyman?</h3>
+            <p className="text-xl text-slate-600 max-w-2xl mx-auto">
+              Quality workmanship, honest pricing, and a commitment to your satisfaction
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+            {[
+              {
+                icon: Shield,
+                title: "Licensed & Insured",
+                desc: "Fully licensed and insured for your complete peace of mind and protection"
+              },
+              {
+                icon: Award,
+                title: "Expert Craftsmanship",
+                desc: "Over 10 years of experience delivering quality work on every project"
+              },
+              {
+                icon: CheckCircle,
+                title: "Satisfaction Guaranteed",
+                desc: "We stand behind our work 100% and ensure you're completely happy"
+              },
+              {
+                icon: Clock,
+                title: "Reliable & On-Time",
+                desc: "We respect your time and always show up when we say we will"
+              }
+            ].map((item, i) => {
+              const Icon = item.icon;
+              return (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: i * 0.1 }}
+                  className="text-center group"
+                >
+                  <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg float-animation" style={{ animationDelay: `${i * 0.2}s` }}>
+                    <Icon className="w-10 h-10 text-white" />
+                  </div>
+                  <h4 className="font-bold text-xl mb-2 text-slate-800">{item.title}</h4>
+                  <p className="text-slate-600">{item.desc}</p>
+                </motion.div>
+              );
+            })}
+          </div>
+
+          {/* Animated Statistics */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="grid grid-cols-2 md:grid-cols-4 gap-8 bg-gradient-to-br from-blue-600 to-blue-700 rounded-3xl p-8 md:p-12 shadow-2xl"
+          >
+            {[
+              { number: "500+", label: "Projects Completed", suffix: "" },
+              { number: "10", label: "Years Experience", suffix: "+" },
+              { number: "100", label: "Satisfaction Rate", suffix: "%" },
+              { number: "24", label: "Hour Response", suffix: "hr" }
+            ].map((stat, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, scale: 0.5 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.6 + i * 0.1 }}
+                className="text-center"
+              >
+                <div className="text-4xl md:text-5xl font-bold text-yellow-400 mb-2">
+                  <CountUpAnimation end={parseInt(stat.number)} suffix={stat.suffix} />
+                </div>
+                <div className="text-sm md:text-base text-blue-100 font-medium">{stat.label}</div>
+              </motion.div>
+            ))}
           </motion.div>
         </div>
       </section>
@@ -937,6 +1121,24 @@ export default function App() {
           </div>
         </div>
       </footer>
+
+      {/* Floating Action Button - Call Now */}
+      <AnimatePresence>
+        {showFloatingButton && (
+          <motion.a
+            href="tel:4806693825"
+            initial={{ opacity: 0, scale: 0.8, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.8, y: 20 }}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+            className="floating-action-button flex items-center gap-3 bg-yellow-400 text-slate-900 px-6 py-4 rounded-full hover:bg-yellow-500 font-bold transition btn-glow"
+          >
+            <Phone className="w-5 h-5" />
+            <span className="hidden sm:inline">Call Now</span>
+          </motion.a>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
