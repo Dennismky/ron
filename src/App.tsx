@@ -347,7 +347,7 @@ export default function App() {
               <img src="/ronlogo.jpg" alt="Ron Handyman Logo" className="h-12 w-auto opacity-90" />
             </div>
             <div>
-              <h1 className="text-xl md:text-2xl font-bold text-slate-800">Ron the Handyman</h1>
+              <h1 className="text-xl md:text-2xl font-bold text-slate-800">Ron Sawyer</h1>
               <p className="text-xs text-slate-600 hidden sm:block">Professional. Reliable. Local.</p>
             </div>
           </div>
@@ -395,11 +395,10 @@ export default function App() {
         </AnimatePresence>
       </header>
 
-      {/* Hero with Video Background */}
       <section className="relative pt-20 pb-32 overflow-hidden">
-        {/* Video Background (placeholder - replace with actual video) */}
+     
         <div className="absolute inset-0 bg-gradient-to-br from-blue-700 via-blue-600 to-blue-800 noise-bg">
-          {/* If you have a video, use: <video autoPlay loop muted playsInline className="w-full h-full object-cover opacity-30"><source src="/hero-video.mp4" type="video/mp4" /></video> */}
+          
         </div>
         <div className="hero-video-overlay" />
         
@@ -448,7 +447,7 @@ export default function App() {
               Quality repairs, honest pricing, and dependable service
             </motion.p>
 
-            {/* Service Highlights Bar */}
+          {/* service Highlights Bar  */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -1060,7 +1059,7 @@ export default function App() {
                   <img src="/ronlogo.jpg" alt="Ron Handyman Logo" className="h-12 w-auto opacity-90" />
                 </div>
                 <div>
-                  <h4 className="text-slate-800 text-xl font-bold">Ron the Handyman</h4>
+                  <h4 className="text-slate-800 text-xl font-bold">Ron Saywer</h4>
                   <p className="text-sm text-slate-600">Your local home repair expert</p>
                 </div>
               </div>
