@@ -109,12 +109,10 @@ export default function App() {
   ];
 
   const projects = [
-    { src: "/projects/deck-repair.jpg", label: "Deck Repair – Boone, IA", category: "Carpentry" },
-    { src: "/projects/bathroom-remodel.jpg", label: "Bathroom Update – Ames, IA", category: "Plumbing" },
-    { src: "/projects/drywall-fix.jpg", label: "Drywall Repair – Ankeny, IA", category: "Drywall" },
-    { src: "/projects/kitchen-install.jpg", label: "Kitchen Install – Nevada, IA", category: "Installations" },
-    { src: "/projects/fence-repair.jpg", label: "Fence Repair – Huxley, IA", category: "Carpentry" },
-    { src: "/projects/painting.jpg", label: "Interior Painting – Story City, IA", category: "Painting" },
+    { src: "/floor1.jpeg", label: "Bathroom Floor Repair - Before", category: "Repairs" },
+    { src: "/floor6.jpeg", label: "Bathroom Floor Repair - Complete", category: "Repairs" },
+    { src: "/sink-installation.jpeg", label: "Sink Installation - Cedar Rapids, IA", category: "Plumbing" },
+    { src: "/fireplace.jpeg", label: "Outdoor Fireplace Installation", category: "Installations" },
   ];
 
   const testimonials = [
@@ -171,7 +169,7 @@ export default function App() {
     },
   ];
 
-  const categories = ["All", "Carpentry", "Plumbing", "Drywall", "Painting", "Installations"];
+  const categories = ["All", "Repairs", "Plumbing", "Installations"];
 
   const filteredProjects = filterCategory === "All" 
     ? projects 
@@ -692,7 +690,7 @@ export default function App() {
           >
             <h3 className="text-4xl md:text-5xl font-bold mb-4">Recent Projects</h3>
             <p className="text-xl text-slate-600 mb-8">
-              Real work completed across Ames, Ankeny, Boone, and surrounding Iowa communities
+              Real work completed in Cedar Rapids and surrounding Iowa communities
             </p>
 
             {/* Category Filter */}
@@ -991,8 +989,9 @@ export default function App() {
                     </div>
                     <div>
                       <p className="text-sm text-blue-200">Service Area</p>
-                      <p className="text-lg font-bold">Central Iowa</p>
-                      <p className="text-sm text-blue-200">Ames • Ankeny • Boone • Nevada & More</p>
+                      <p className="text-lg font-bold">Cedar Rapids, IA</p>
+                      <p className="text-sm text-blue-200">2410 River Bluffs Dr NW Apt 302</p>
+                      <p className="text-sm text-blue-200">Cedar Rapids, IA 52405</p>
                     </div>
                   </div>
                 </div>
@@ -1030,14 +1029,14 @@ export default function App() {
             className="mt-16 bg-white/10 backdrop-blur rounded-3xl overflow-hidden shadow-2xl"
           >
             <div className="p-6 text-center">
-              <h4 className="text-2xl font-bold mb-2">Proudly Serving Central Iowa</h4>
+              <h4 className="text-2xl font-bold mb-2">Serving Cedar Rapids & Surrounding Areas</h4>
               <p className="text-blue-100 mb-4">
-                Ames • Ankeny • Boone • Nevada • Huxley • Story City • Gilbert • Roland • McCallsburg
+                Cedar Rapids • Marion • Hiawatha • Iowa City • Coralville & More
               </p>
             </div>
             <div className="w-full h-96">
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d190885.83484716887!2d-93.80373584999999!3d42.034722799999996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x87ee70e2e2e02dc1%3A0x724ff3f7f0c4b516!2sAmes%2C%20IA!5e0!3m2!1sen!2sus!4v1234567890123!5m2!1sen!2sus"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2978.3976682853644!2d-91.72516842344678!3d42.04444597122096!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x87e4f2b1f8e8e8e9%3A0x1234567890abcdef!2s2410%20River%20Bluffs%20Dr%20NW%20%23302%2C%20Cedar%20Rapids%2C%20IA%2052405!5e0!3m2!1sen!2sus!4v1234567890123!5m2!1sen!2sus"
                 width="100%"
                 height="100%"
                 style={{ border: 0 }}
@@ -1097,7 +1096,7 @@ export default function App() {
                 </p>
                 <p className="flex items-center gap-2 text-slate-700">
                   <MapPin className="w-4 h-4" />
-                  Central Iowa
+                  Cedar Rapids, IA
                 </p>
               </div>
             </div>
