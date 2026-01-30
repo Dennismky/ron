@@ -23,6 +23,10 @@ import {
   ChevronDown,
   Menu,
   MessageCircle,
+  Wind,
+  Snowflake,
+  Leaf,
+  TreePine,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -109,6 +113,35 @@ export default function App() {
       desc: "Trim, shelving, doors, and custom woodwork.",
       details: "Quality carpentry including custom shelving, trim installation, door hanging, and decorative woodwork.",
     },
+    {
+  icon: Wind,
+  title: "HVAC Services",
+  desc: "Heating, cooling, repairs, and system maintenance.",
+  details:
+    "Professional HVAC installation, diagnostics, repairs, and preventative maintenance for residential and commercial properties. We service air conditioners, furnaces, heat pumps, and ventilation systems.",
+},
+{
+  icon: TreePine,
+  title: "Outdoor Landscaping",
+  desc: "Custom landscape design and property care.",
+  details:
+    "Professional landscape design, lawn renovation, tree and shrub care, irrigation support, and outdoor property maintenance for homes and businesses.",
+},
+{
+  icon: Snowflake,
+  title: "Heating & Cooling",
+  desc: "AC, furnace, and indoor comfort solutions.",
+  details:
+    "Reliable heating and cooling services including AC installation, furnace repair, airflow optimization, thermostat upgrades, and energy-efficient HVAC solutions.",
+},
+{
+  icon: TreePine,
+  title: "Outdoor Landscaping",
+  desc: "Custom landscape design and property care.",
+  details:
+    "Professional landscape design, lawn renovation, tree and shrub care, irrigation support, and outdoor property maintenance for homes and businesses.",
+},
+
   ];
 
   const projects = [
