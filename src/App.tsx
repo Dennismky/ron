@@ -25,7 +25,6 @@ import {
   MessageCircle,
   Wind,
   Snowflake,
-  Leaf,
   TreePine,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -127,20 +126,8 @@ export default function App() {
   details:
     "Professional landscape design, lawn renovation, tree and shrub care, irrigation support, and outdoor property maintenance for homes and businesses.",
 },
-{
-  icon: Snowflake,
-  title: "Heating & Cooling",
-  desc: "AC, furnace, and indoor comfort solutions.",
-  details:
-    "Reliable heating and cooling services including AC installation, furnace repair, airflow optimization, thermostat upgrades, and energy-efficient HVAC solutions.",
-},
-{
-  icon: TreePine,
-  title: "Outdoor Landscaping",
-  desc: "Custom landscape design and property care.",
-  details:
-    "Professional landscape design, lawn renovation, tree and shrub care, irrigation support, and outdoor property maintenance for homes and businesses.",
-},
+
+
 
   ];
 
