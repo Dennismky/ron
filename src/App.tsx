@@ -10,7 +10,7 @@ import {
   Hammer,
   Star,
   ArrowRight,
-  Sparkles,
+  
   Facebook,
   Instagram,
   Twitter,
