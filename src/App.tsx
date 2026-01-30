@@ -12,7 +12,6 @@ import {
   ArrowRight,
   Facebook,
   Instagram,
-  Twitter,
   MapPin,
   Clock,
   Shield,
@@ -149,7 +148,7 @@ export default function App() {
   const faqs = [
     {
       question: "How much do you charge?",
-      answer: "Our rates are competitive and transparent. We charge $65/hour for most handyman services, with free estimates for larger projects. We'll always provide a clear quote before starting work.",
+      answer: "Our rates are competitive and transparent and they differ depending on the  work. Don't worry, We'll always provide a clear quote before starting work.",
     },
     {
       question: "Do you provide free quotes?",
@@ -351,7 +350,7 @@ export default function App() {
               <img src="/ronlogo.jpg" alt="Ron Handyman Logo" className="h-12 w-auto opacity-90" />
             </div>
             <div>
-              <h1 className="text-xl md:text-2xl font-bold text-slate-800">Ron Sawyer</h1>
+              <h1 className="text-xl md:text-2xl font-bold text-slate-800">Ron Handyman Services</h1>
               <p className="text-xs text-slate-600 hidden sm:block">Professional. Reliable. Local.</p>
             </div>
           </div>
@@ -513,7 +512,7 @@ export default function App() {
             transition={{ duration: 0.6 }}
             className="text-center mb-16"
           >
-            <h3 className="text-4xl md:text-5xl font-bold mb-4">Why Choose Ron the Handyman?</h3>
+            <h3 className="text-4xl md:text-5xl font-bold mb-4">Why Choose Ron Handyman Services?</h3>
             <p className="text-xl text-slate-600 max-w-2xl mx-auto">
               Quality workmanship, honest pricing, and a commitment to your satisfaction
             </p>
@@ -990,14 +989,11 @@ export default function App() {
               <div>
                 <h5 className="font-bold text-lg mb-4">Connect With Us</h5>
                 <div className="flex gap-4">
-                  <a href="https://facebook.com/ronhandyman" target="_blank" rel="noopener noreferrer" className="p-3 bg-white/10 backdrop-blur hover:bg-white/20 rounded-xl transition">
+                  <a href="https://www.facebook.com/share/17wvY3i7Pi/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" className="p-3 bg-white/10 backdrop-blur hover:bg-white/20 rounded-xl transition">
                     <Facebook className="w-6 h-6" />
                   </a>
-                  <a href="https://instagram.com/ronhandyman" target="_blank" rel="noopener noreferrer" className="p-3 bg-white/10 backdrop-blur hover:bg-white/20 rounded-xl transition">
+                  <a href="https://www.instagram.com/king_ron2?igsh=ZGhtamdudWc2emo3&utm_source=qr" target="_blank" rel="noopener noreferrer" className="p-3 bg-white/10 backdrop-blur hover:bg-white/20 rounded-xl transition">
                     <Instagram className="w-6 h-6" />
-                  </a>
-                  <a href="https://twitter.com/ronhandyman" target="_blank" rel="noopener noreferrer" className="p-3 bg-white/10 backdrop-blur hover:bg-white/20 rounded-xl transition">
-                    <Twitter className="w-6 h-6" />
                   </a>
                   <a href="https://wa.me/14806693825" target="_blank" rel="noopener noreferrer" className="p-3 bg-green-500 hover:bg-green-600 rounded-xl transition">
                     <MessageCircle className="w-6 h-6" />
@@ -1045,7 +1041,7 @@ export default function App() {
                   <img src="/ronlogo.jpg" alt="Ron Handyman Logo" className="h-12 w-auto opacity-90" />
                 </div>
                 <div>
-                  <h4 className="text-slate-800 text-xl font-bold">Ron Sawyer</h4>
+                  <h4 className="text-slate-800 text-xl font-bold">Ron Handyman Services</h4>
                   <p className="text-sm text-slate-600">Your local home repair expert</p>
                 </div>
               </div>
@@ -1097,9 +1093,6 @@ export default function App() {
               </a>
               <a href="https://www.instagram.com/king_ron2?igsh=ZGhtamdudWc2emo3&utm_source=qr" target="_blank" rel="noopener noreferrer" className="text-slate-600 hover:text-blue-600 transition">
                 <Instagram className="w-5 h-5" />
-              </a>
-              <a href="https://twitter.com/ronhandyman" target="_blank" rel="noopener noreferrer" className="text-slate-600 hover:text-blue-600 transition">
-                <Twitter className="w-5 h-5" />
               </a>
             </div>
           </div>
