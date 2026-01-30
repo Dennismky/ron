@@ -10,7 +10,6 @@ import {
   Hammer,
   Star,
   ArrowRight,
-  
   Facebook,
   Instagram,
   Twitter,
@@ -28,15 +27,20 @@ import {
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
-// Counter Animation Component
-function CountUpAnimation({ end, suffix = "" }) {
+// Counter Animation Component with TypeScript
+interface CountUpAnimationProps {
+  end: number;
+  suffix?: string;
+}
+
+function CountUpAnimation({ end, suffix = "" }: CountUpAnimationProps) {
   const [count, setCount] = useState(0);
   const [hasAnimated, setHasAnimated] = useState(false);
 
   useEffect(() => {
     if (hasAnimated) return;
     
-    const duration = 2000; // 2 seconds
+    const duration = 2000;
     const steps = 60;
     const increment = end / steps;
     const stepDuration = duration / steps;
@@ -60,11 +64,11 @@ function CountUpAnimation({ end, suffix = "" }) {
 }
 
 export default function App() {
-  const [activeService, setActiveService] = useState(null);
+  const [activeService, setActiveService] = useState<number | null>(null);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
-  const [expandedFAQ, setExpandedFAQ] = useState(null);
+  const [expandedFAQ, setExpandedFAQ] = useState<number | null>(null);
   const [filterCategory, setFilterCategory] = useState("All");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [showFloatingButton, setShowFloatingButton] = useState(false);
@@ -190,7 +194,7 @@ export default function App() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const openLightbox = (index) => {
+  const openLightbox = (index: number) => {
     setLightboxIndex(index);
     setLightboxOpen(true);
   };
@@ -352,7 +356,6 @@ export default function App() {
             </div>
           </div>
           
-          {/* Desktop Nav */}
           <nav className="hidden lg:flex gap-8 items-center">
             <a href="#services" className="text-slate-700 hover:text-blue-600 font-medium transition">Services</a>
             <a href="#gallery" className="text-slate-700 hover:text-blue-600 font-medium transition">Projects</a>
@@ -363,7 +366,6 @@ export default function App() {
             </a>
           </nav>
 
-          {/* Mobile Menu Button */}
           <button 
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="lg:hidden p-2 hover:bg-slate-100 rounded-lg transition"
@@ -372,7 +374,6 @@ export default function App() {
           </button>
         </div>
 
-        {/* Mobile Menu */}
         <AnimatePresence>
           {mobileMenuOpen && (
             <motion.div
@@ -395,11 +396,9 @@ export default function App() {
         </AnimatePresence>
       </header>
 
+      {/* Hero */}
       <section className="relative pt-20 pb-32 overflow-hidden">
-     
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-700 via-blue-600 to-blue-800 noise-bg">
-          
-        </div>
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-700 via-blue-600 to-blue-800 noise-bg"></div>
         <div className="hero-video-overlay" />
         
         <div className="hero-content max-w-6xl mx-auto px-4 py-20 text-center text-white">
@@ -408,7 +407,6 @@ export default function App() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            {/* Trust Badges */}
             <div className="flex flex-wrap justify-center gap-4 mb-8">
               {[
                 { icon: Shield, text: "Licensed & Insured" },
@@ -447,7 +445,6 @@ export default function App() {
               Quality repairs, honest pricing, and dependable service
             </motion.p>
 
-          {/* service Highlights Bar  */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -492,7 +489,6 @@ export default function App() {
             </motion.div>
           </motion.div>
 
-          {/* Scroll Indicator */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -504,9 +500,8 @@ export default function App() {
         </div>
       </section>
 
-      {/* Why Choose Us Section */}
+      {/* Why Choose Us */}
       <section className="py-20 px-4 bg-white relative overflow-hidden">
-        {/* Decorative background blobs */}
         <div className="decorative-blob absolute top-20 left-10 w-64 h-64 bg-blue-400" style={{ animationDelay: '0s' }} />
         <div className="decorative-blob absolute bottom-20 right-10 w-80 h-80 bg-yellow-300" style={{ animationDelay: '2s' }} />
         
@@ -567,7 +562,6 @@ export default function App() {
             })}
           </div>
 
-          {/* Animated Statistics */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -576,7 +570,7 @@ export default function App() {
             className="grid grid-cols-2 md:grid-cols-4 gap-8 bg-gradient-to-br from-blue-600 to-blue-700 rounded-3xl p-8 md:p-12 shadow-2xl"
           >
             {[
-              { number: "500+", label: "Projects Completed", suffix: "" },
+              { number: "500", label: "Projects Completed", suffix: "+" },
               { number: "10", label: "Years Experience", suffix: "+" },
               { number: "100", label: "Satisfaction Rate", suffix: "%" },
               { number: "24", label: "Hour Response", suffix: "hr" }
@@ -599,7 +593,7 @@ export default function App() {
         </div>
       </section>
 
-      {/* Services Section */}
+      {/* Services */}
       <section id="services" className="py-20 px-4 bg-slate-50">
         <div className="max-w-6xl mx-auto">
           <motion.div
@@ -677,7 +671,7 @@ export default function App() {
         </div>
       </section>
 
-      {/* Gallery with Filter */}
+      {/* Gallery */}
       <section id="gallery" className="py-20 px-4 bg-white">
         <div className="max-w-7xl mx-auto">
           <motion.div
@@ -692,7 +686,6 @@ export default function App() {
               Real work completed in Cedar Rapids and surrounding Iowa communities
             </p>
 
-            {/* Category Filter */}
             <div className="flex flex-wrap justify-center gap-3 mb-8">
               {categories.map((cat) => (
                 <button
@@ -805,7 +798,7 @@ export default function App() {
         )}
       </AnimatePresence>
 
-      {/* Testimonials Carousel */}
+      {/* Testimonials */}
       <section id="reviews" className="py-20 px-4 bg-gradient-to-br from-blue-50 to-slate-50">
         <div className="max-w-5xl mx-auto">
           <motion.div
@@ -849,7 +842,6 @@ export default function App() {
               </motion.div>
             </AnimatePresence>
 
-            {/* Navigation Dots */}
             <div className="flex justify-center gap-3 mt-8">
               {testimonials.map((_, i) => (
                 <button
@@ -865,7 +857,7 @@ export default function App() {
         </div>
       </section>
 
-      {/* FAQ Section */}
+      {/* FAQ */}
       <section id="faq" className="py-20 px-4 bg-white">
         <div className="max-w-4xl mx-auto">
           <motion.div
@@ -922,7 +914,7 @@ export default function App() {
         </div>
       </section>
 
-      {/* Contact Section */}
+      {/* Contact */}
       <section id="contact" className="py-20 px-4 bg-gradient-to-br from-blue-600 to-blue-800 text-white">
         <div className="max-w-6xl mx-auto">
           <motion.div
@@ -939,7 +931,6 @@ export default function App() {
           </motion.div>
 
           <div className="max-w-4xl mx-auto">
-            {/* Contact Info */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -996,7 +987,6 @@ export default function App() {
                 </div>
               </div>
 
-              {/* Social & Messaging */}
               <div>
                 <h5 className="font-bold text-lg mb-4">Connect With Us</h5>
                 <div className="flex gap-4">
@@ -1015,11 +1005,8 @@ export default function App() {
                 </div>
               </div>
             </motion.div>
-
-
           </div>
 
-          {/* Service Area Map */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -1039,7 +1026,6 @@ export default function App() {
                 width="100%"
                 height="100%"
                 style={{ border: 0 }}
-                allowFullScreen=""
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
                 title="Service Area Map"
@@ -1059,7 +1045,7 @@ export default function App() {
                   <img src="/ronlogo.jpg" alt="Ron Handyman Logo" className="h-12 w-auto opacity-90" />
                 </div>
                 <div>
-                  <h4 className="text-slate-800 text-xl font-bold">Ron Saywer</h4>
+                  <h4 className="text-slate-800 text-xl font-bold">Ron Sawyer</h4>
                   <p className="text-sm text-slate-600">Your local home repair expert</p>
                 </div>
               </div>
@@ -1106,10 +1092,10 @@ export default function App() {
               © 2026 Ron Handyman Services · Licensed & Insured · Iowa, USA
             </p>
             <div className="flex gap-4">
-              <a href="https://facebook.com/ronhandyman" target="_blank" rel="noopener noreferrer" className="text-slate-600 hover:text-blue-600 transition">
+              <a href="https://www.facebook.com/share/17wvY3i7Pi/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" className="text-slate-600 hover:text-blue-600 transition">
                 <Facebook className="w-5 h-5" />
               </a>
-              <a href="https://instagram.com/ronhandyman" target="_blank" rel="noopener noreferrer" className="text-slate-600 hover:text-blue-600 transition">
+              <a href="https://www.instagram.com/king_ron2?igsh=ZGhtamdudWc2emo3&utm_source=qr" target="_blank" rel="noopener noreferrer" className="text-slate-600 hover:text-blue-600 transition">
                 <Instagram className="w-5 h-5" />
               </a>
               <a href="https://twitter.com/ronhandyman" target="_blank" rel="noopener noreferrer" className="text-slate-600 hover:text-blue-600 transition">
@@ -1120,7 +1106,7 @@ export default function App() {
         </div>
       </footer>
 
-      {/* Floating Action Button - Call Now */}
+      {/* Floating Action Button */}
       <AnimatePresence>
         {showFloatingButton && (
           <motion.a
