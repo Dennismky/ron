@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import {
   Phone,
   Mail,
@@ -6,7 +6,6 @@ import {
   Home,
   Zap,
   Droplets,
-  Paintbrush,
   Hammer,
   Star,
   ArrowRight,
@@ -24,17 +23,29 @@ import {
   Menu,
   MessageCircle,
   Wind,
-  Snowflake,
   TreePine,
+  Layers,
+  Refrigerator,
+  Paintbrush,
+  Play,
+  Pause,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
-// Counter Animation Component with TypeScript
+// TypeScript interfaces
 interface CountUpAnimationProps {
   end: number;
   suffix?: string;
 }
 
+interface Project {
+  src: string;
+  label: string;
+  category: string;
+  type?: string;
+}
+
+// Counter Animation Component
 function CountUpAnimation({ end, suffix = "" }: CountUpAnimationProps) {
   const [count, setCount] = useState(0);
   const [hasAnimated, setHasAnimated] = useState(false);
@@ -65,6 +76,118 @@ function CountUpAnimation({ end, suffix = "" }: CountUpAnimationProps) {
   return <span>{count}{suffix}</span>;
 }
 
+// Video Card Component with Controls
+function VideoCard({ src, label, category, onClick }: { src: string; label: string; category: string; onClick: () => void }) {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
+
+  const togglePlay = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (videoRef.current) {
+      if (isPlaying) {
+        videoRef.current.pause();
+      } else {
+        videoRef.current.play();
+      }
+      setIsPlaying(!isPlaying);
+    }
+  };
+
+  return (
+    <motion.div
+      layout
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.9 }}
+      transition={{ duration: 0.4 }}
+      className="group relative overflow-hidden rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 bg-gradient-to-br from-slate-100 to-slate-200"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <div className="aspect-[4/3] relative bg-slate-900">
+        <video
+          ref={videoRef}
+          className="w-full h-full object-cover"
+          muted
+          loop
+          playsInline
+          controls
+          preload="auto"
+        >
+          <source src={src} type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+        
+        {/* Play/Pause Overlay Button */}
+        <button
+          onClick={togglePlay}
+          className="absolute inset-0 flex items-center justify-center bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"
+        >
+          {isPlaying ? (
+            <Pause className="w-16 h-16 text-white drop-shadow-lg" />
+          ) : (
+            <Play className="w-16 h-16 text-white drop-shadow-lg" />
+          )}
+        </button>
+      </div>
+
+      {/* Info Overlay */}
+      <div className={`absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent transition-opacity duration-300 ${isHovered ? 'opacity-100' : 'opacity-0'}`}>
+        <div className="absolute bottom-0 left-0 right-0 p-6 text-white transform transition-transform duration-300" style={{ transform: isHovered ? 'translateY(0)' : 'translateY(20px)' }}>
+          <div className="flex items-center gap-2 mb-2">
+            <span className="inline-block px-3 py-1 bg-yellow-400 text-slate-900 rounded-full text-xs font-bold">
+              {category}
+            </span>
+            <div className="flex items-center gap-1">
+              <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
+              <span className="text-xs font-semibold">Video</span>
+            </div>
+          </div>
+          <p className="font-bold text-lg mb-2">{label}</p>
+          <button
+            onClick={onClick}
+            className="text-sm text-blue-300 hover:text-blue-200 transition flex items-center gap-1"
+          >
+            View Full Screen <ArrowRight className="w-3 h-3" />
+          </button>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
+// Image Card Component
+function ImageCard({ src, label, category, onClick }: { src: string; label: string; category: string; onClick: () => void }) {
+  return (
+    <motion.div
+      layout
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.9 }}
+      transition={{ duration: 0.4 }}
+      className="group relative overflow-hidden rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 cursor-pointer bg-gradient-to-br from-slate-100 to-slate-200"
+      onClick={onClick}
+    >
+      <div className="aspect-[4/3] bg-slate-200">
+        <img
+          src={src}
+          alt={label}
+          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+        />
+      </div>
+      <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        <div className="absolute bottom-0 left-0 right-0 p-6 text-white transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+          <span className="inline-block px-3 py-1 bg-yellow-400 text-slate-900 rounded-full text-xs font-bold mb-2">
+            {category}
+          </span>
+          <p className="font-bold text-lg">{label}</p>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
 export default function App() {
   const [activeService, setActiveService] = useState<number | null>(null);
   const [lightboxOpen, setLightboxOpen] = useState(false);
@@ -74,6 +197,7 @@ export default function App() {
   const [filterCategory, setFilterCategory] = useState("All");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [showFloatingButton, setShowFloatingButton] = useState(false);
+  const lightboxVideoRef = useRef<HTMLVideoElement>(null);
 
   const services = [
     {
@@ -113,29 +237,47 @@ export default function App() {
       details: "Quality carpentry including custom shelving, trim installation, door hanging, and decorative woodwork.",
     },
     {
-  icon: Wind,
-  title: "HVAC Services",
-  desc: "Heating, cooling, repairs, and system maintenance.",
-  details:
-    "Professional HVAC installation, diagnostics, repairs, and preventative maintenance for residential and commercial properties. We service air conditioners, furnaces, heat pumps, and ventilation systems.",
-},
-{
-  icon: TreePine,
-  title: "Outdoor Landscaping",
-  desc: "Custom landscape design and property care.",
-  details:
-    "Professional landscape design, lawn renovation, tree and shrub care, irrigation support, and outdoor property maintenance for homes and businesses.",
-},
-
-
-
+      icon: Wind,
+      title: "HVAC Services",
+      desc: "Heating, cooling, repairs, and system maintenance.",
+      details: "Professional HVAC installation, diagnostics, repairs, and preventative maintenance for residential and commercial properties. We service air conditioners, furnaces, heat pumps, and ventilation systems.",
+    },
+    {
+      icon: TreePine,
+      title: "Outdoor Landscaping",
+      desc: "Custom landscape design and property care.",
+      details: "Professional landscape design, lawn renovation, tree and shrub care, irrigation support, and outdoor property maintenance for homes and businesses.",
+    },
+    {
+      icon: Layers,
+      title: "Epoxy Floors",
+      desc: "Durable, seamless epoxy floor installation.",
+      details: "High-performance epoxy flooring for garages, basements, commercial spaces, and workshops. Our epoxy systems are durable, moisture-resistant, easy to clean, and designed to withstand heavy use.",
+    },
+    {
+      icon: Refrigerator,
+      title: "Appliance Repair",
+      desc: "Fridge, washer, dryer, dishwasher, and stove repairs.",
+      details: "Expert appliance repair services for refrigerators, washing machines, dryers, dishwashers, and stoves. We diagnose electrical, mechanical, and performance issues and restore appliances to safe, efficient operation.",
+    },
+    {
+      icon: Paintbrush,
+      title: "Epoxy Countertops",
+      desc: "Modern, durable epoxy countertop finishes.",
+      details: "Custom epoxy countertop resurfacing and installation for kitchens, bathrooms, and commercial spaces. We create seamless, heat-resistant, and visually stunning finishes that mimic stone, marble, or modern designs.",
+    },
   ];
 
-  const projects = [
-    { src: "/floor1.jpeg", label: "Bathroom Floor Repair - Before", category: "Repairs" },
-    { src: "/floor6.jpeg", label: "Bathroom Floor Repair - Complete", category: "Repairs" },
-    { src: "/sink-installation.jpeg", label: "Sink Installation - Cedar Rapids, IA", category: "Plumbing" },
-    { src: "/fireplace.jpeg", label: "Outdoor Fireplace Installation", category: "Installations" },
+  const projects: Project[] = [
+    { src: "/floor1.jpeg", label: "Bathroom Floor Repair - Before", category: "Repairs", type: "image" },
+    { src: "/floor6.jpeg", label: "Bathroom Floor Repair - Complete", category: "Repairs", type: "image" },
+    { src: "/sink-installation.jpeg", label: "Sink Installation - Cedar Rapids, IA", category: "Plumbing", type: "image" },
+    { src: "/fireplace.jpeg", label: "Outdoor Fireplace Installation", category: "Installations", type: "image" },
+    { src: "/landscape2.jpeg", label: "Residential Landscaping Project", category: "Landscaping", type: "image" },
+    { src: "/epoxy-floor.jpeg", label: "Garage Epoxy Floor Installation", category: "Epoxy", type: "image" },
+    { src: "/ac-repair.mp4", label: "HVAC AC Repair Service", category: "HVAC", type: "video" },
+    { src: "/drain-cleanout.mp4", label: "Drain Cleanout Service", category: "Plumbing", type: "video" },
+    { src: "/washingmachine-motorrepair.mp4", label: "Washing Machine Motor Repair", category: "Appliance Repair", type: "video" },
   ];
 
   const testimonials = [
@@ -168,7 +310,7 @@ export default function App() {
   const faqs = [
     {
       question: "How much do you charge?",
-      answer: "Our rates are competitive and transparent and they differ depending on the  work. Don't worry, We'll always provide a clear quote before starting work.",
+      answer: "Our rates are competitive and transparent and they differ depending on the work. Don't worry, We'll always provide a clear quote before starting work.",
     },
     {
       question: "Do you provide free quotes?",
@@ -192,7 +334,7 @@ export default function App() {
     },
   ];
 
-  const categories = ["All", "Repairs", "Plumbing", "Installations"];
+  const categories = ["All", "Repairs", "Plumbing", "Installations", "HVAC", "Landscaping", "Epoxy", "Appliance Repair"];
 
   const filteredProjects = filterCategory === "All" 
     ? projects 
@@ -225,6 +367,8 @@ export default function App() {
   const prevImage = () => {
     setLightboxIndex((prev) => (prev - 1 + filteredProjects.length) % filteredProjects.length);
   };
+
+  const currentProject = filteredProjects[lightboxIndex];
 
   return (
     <div className="min-h-screen bg-white text-slate-800">
@@ -702,9 +846,10 @@ export default function App() {
           >
             <h3 className="text-4xl md:text-5xl font-bold mb-4">Recent Projects</h3>
             <p className="text-xl text-slate-600 mb-8">
-              Real work completed in Cedar Rapids and surrounding Iowa communities
+              Real work completed in Iowa communities - photos and videos
             </p>
 
+            {/* Category Filter */}
             <div className="flex flex-wrap justify-center gap-3 mb-8">
               {categories.map((cat) => (
                 <button
@@ -724,33 +869,24 @@ export default function App() {
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             <AnimatePresence mode="wait">
-              {filteredProjects.map((img, i) => (
-                <motion.div
-                  key={img.label}
-                  layout
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.9 }}
-                  transition={{ duration: 0.4 }}
-                  className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition cursor-pointer"
-                  onClick={() => openLightbox(i)}
-                >
-                  <div className="aspect-[4/3] bg-slate-200">
-                    <img
-                      src={img.src}
-                      alt={img.label}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                    />
-                  </div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <div className="absolute bottom-0 left-0 right-0 p-5 text-white transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                      <span className="inline-block px-3 py-1 bg-yellow-400 text-slate-900 rounded-full text-xs font-bold mb-2">
-                        {img.category}
-                      </span>
-                      <p className="font-bold text-lg">{img.label}</p>
-                    </div>
-                  </div>
-                </motion.div>
+              {filteredProjects.map((item, i) => (
+                item.type === 'video' ? (
+                  <VideoCard
+                    key={item.label}
+                    src={item.src}
+                    label={item.label}
+                    category={item.category}
+                    onClick={() => openLightbox(i)}
+                  />
+                ) : (
+                  <ImageCard
+                    key={item.label}
+                    src={item.src}
+                    label={item.label}
+                    category={item.category}
+                    onClick={() => openLightbox(i)}
+                  />
+                )
               ))}
             </AnimatePresence>
           </div>
@@ -804,13 +940,27 @@ export default function App() {
               className="max-w-5xl max-h-[90vh] mx-4"
               onClick={(e) => e.stopPropagation()}
             >
-              <img
-                src={filteredProjects[lightboxIndex].src}
-                alt={filteredProjects[lightboxIndex].label}
-                className="max-w-full max-h-[80vh] object-contain rounded-xl shadow-2xl"
-              />
+              {currentProject?.type === 'video' ? (
+                <video
+                  ref={lightboxVideoRef}
+                  className="max-w-full max-h-[80vh] rounded-xl shadow-2xl"
+                  controls
+                  autoPlay
+                  muted
+                  loop
+                >
+                  <source src={currentProject.src} type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+              ) : (
+                <img
+                  src={currentProject?.src}
+                  alt={currentProject?.label}
+                  className="max-w-full max-h-[80vh] object-contain rounded-xl shadow-2xl"
+                />
+              )}
               <p className="text-white text-center mt-4 text-lg font-semibold">
-                {filteredProjects[lightboxIndex].label}
+                {currentProject?.label}
               </p>
             </motion.div>
           </motion.div>
