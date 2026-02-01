@@ -314,7 +314,7 @@ export default function App() {
     },
     {
       question: "Do you provide free quotes?",
-      answer: "Yes! We offer free, no-obligation quotes for all projects. Simply call us or fill out the contact form, and we'll schedule a time to assess your needs.",
+      answer: "No,our quotes cost 25$. Simply call us or fill out the contact form, and we'll schedule a time to assess your needs.",
     },
     {
       question: "What areas do you serve?",
