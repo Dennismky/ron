@@ -1273,7 +1273,7 @@ export default function App() {
       <AnimatePresence>
         {showFloatingButton && (
           <motion.a
-            href="tel:4806693825"
+            href="https://wa.me/14806693825"
             initial={{ opacity: 0, scale: 0.8, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.8, y: 20 }}
